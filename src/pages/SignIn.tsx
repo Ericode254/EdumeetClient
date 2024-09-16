@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Axios from "axios"
+import toast from "react-hot-toast"
 
 const SignIn = () => {
     const [email, setEmail] = useState('')
@@ -12,9 +13,12 @@ const SignIn = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        Axios.post("http://localhost:3000/auth/signin", { email, password}).then((response) => {
+        Axios.post("http://localhost:3000/auth/signin", { email, password }).then((response) => {
             if (response.data.status) {
                 navigate("/")
+                toast.success("Log in successfully")
+            } else {
+                toast.error("Login failed")
             }
         }).catch((err) => {
             console.log(err);

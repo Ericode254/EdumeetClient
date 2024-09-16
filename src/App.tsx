@@ -6,19 +6,23 @@ import Meets from "./pages/Meets"
 import Profile from "./pages/Profile"
 import ResetPassword from "./pages/ResetPassword"
 import ForgotPassword from "./pages/ForgotPassword"
+import { Toaster } from "react-hot-toast"
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/Meets" element={<Meets />}></Route>
-      <Route path="/Profile" element={<Profile />}></Route>
-      <Route path="/signup" element={<SignUp />}></Route>
-      <Route path="/signin" element={<SignIn />}></Route>
-      <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
-      <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
-      <Route path="*"></Route>
-    </Routes>
+    <>
+      <Toaster position="top-right" />
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/Meets" element={<Meets />}></Route>
+        <Route path="/Profile" element={<Profile />}></Route>
+        <Route path="/signup" element={<SignUp />}></Route>
+        <Route path="/signin" element={<SignIn />}></Route>
+        <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
+        <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
+        <Route path="*"></Route>
+      </Routes>
+    </>
   )
 }
 

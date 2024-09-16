@@ -1,15 +1,14 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useToast } from "@/hooks/use-toast"
 import Axios from "axios"
 import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import toast from "react-hot-toast"
 
 const ResetPassword = () => {
     const [password, setPassword] = useState('')
     const { token } = useParams()
 
-    const { toast } = useToast()
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
@@ -17,9 +16,10 @@ const ResetPassword = () => {
 
         Axios.post("http://localhost:3000/auth/resetpassword/"+token, { password, }).then((response) => {
             if (response.data.status) {
+                toast.success("Password Reset Successful")
                 navigate("/signin")
             }
-            alert(response.data.message)
+            toast.error(response.data.message)
         }).catch((err) => {
             console.log(err);
         })

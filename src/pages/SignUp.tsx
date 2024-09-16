@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Axios from 'axios'
+import toast from "react-hot-toast"
 
 const SignUp = () => {
     const navigate = useNavigate()
@@ -13,10 +14,14 @@ const SignUp = () => {
         e.preventDefault()
         Axios.post("http://localhost:3000/auth/signup", { username, email, password }).then(response => {
             if (response.data.status) {
+                toast.success("User created successfully")
                 navigate("/signin")
+            } else {
+                toast.error("Registration failed")
             }
         }).catch(err => {
             console.log(err);
+
         })
     }
 

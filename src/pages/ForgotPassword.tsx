@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useToast } from "@/hooks/use-toast"
 import Axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import toast from "react-hot-toast"
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('')
 
-    const { toast } = useToast()
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
@@ -16,8 +15,10 @@ const ForgotPassword = () => {
 
         Axios.post("http://localhost:3000/auth/forgot-password", { email, }).then((response) => {
             if (response.data.status) {
-                alert("check your email")
+                toast.success("Check your Email to reset your password")
                 navigate("/signin")
+            } else {
+                toast.error("Invalid Email address")
             }
         }).catch((err) => {
             console.log(err);
