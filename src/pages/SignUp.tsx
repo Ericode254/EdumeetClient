@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { SyntheticEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Axios from 'axios'
 import toast from "react-hot-toast"
@@ -10,7 +10,7 @@ const SignUp = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault()
         Axios.post("http://localhost:3000/auth/signup", { username, email, password }).then(response => {
             if (response.data.status) {

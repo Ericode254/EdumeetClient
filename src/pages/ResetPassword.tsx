@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Axios from "axios"
-import { useState } from "react"
+import { SyntheticEvent, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import toast from "react-hot-toast"
 
@@ -11,7 +11,7 @@ const ResetPassword = () => {
 
     const navigate = useNavigate()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault()
 
         Axios.post("http://localhost:3000/auth/resetpassword/"+token, { password, }).then((response) => {
