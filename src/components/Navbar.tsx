@@ -1,8 +1,22 @@
 import { Button } from './ui/button'
 import { useNavigate } from 'react-router-dom'
+import Axios from "axios"
+import toast from "react-hot-toast"
 
 const Navbar = () => {
     const navigate = useNavigate()
+
+    Axios.defaults.withCredentials = true
+    const handleLogout = () => {
+        Axios.get("http://localhost:3000/auth/logout").then((response) => {
+            if (response.data.status) {
+                toast.success("Logged Out Successfully")
+                navigate("/")
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
     return (
         <div className="navbar bg-base-100">
             <div className="navbar-start">
@@ -26,6 +40,7 @@ const Navbar = () => {
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         <li><a href="/" className="text-yellow-400 text-lg">Home</a></li>
                         <li><a href="/Meets" className="text-yellow-400 text-lg">Meets</a></li>
+                        <li><a href="/postmeet" className="text-yellow-400 text-lg">Post Meet</a></li>
                         <li><a href="/Profile" className="text-yellow-400 text-lg">Profile</a></li>
                     </ul>
                 </div>
@@ -34,8 +49,8 @@ const Navbar = () => {
                 <a href="/" className="btn btn-ghost text-xl text-yellow-400">Edumeet</a>
             </div>
             <div className="navbar-end">
-                <Button className="mr-5 bg-indigo-500" onClick={() => navigate("/signup")}> SignUp </Button>
-                <Button className="bg-indigo-500" onClick={() => navigate("/signin")}>  SignIn </Button>
+                <Button className="mr-5 bg-indigo-500" onClick={handleLogout}> LogOut </Button>
+                {/* <Button className="bg-indigo-500" onClick={() => navigate("/signin")}>  SignIn </Button> */}
             </div>
         </div>
     )

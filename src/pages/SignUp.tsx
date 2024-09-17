@@ -15,7 +15,7 @@ const SignUp = () => {
         Axios.post("http://localhost:3000/auth/signup", { username, email, password }).then(response => {
             if (response.data.status) {
                 toast.success("User created successfully")
-                navigate("/signin")
+                navigate("/")
             } else {
                 toast.error("Registration failed")
             }

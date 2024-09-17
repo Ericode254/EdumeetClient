@@ -15,7 +15,7 @@ const SignIn = () => {
 
         Axios.post("http://localhost:3000/auth/signin", { email, password }).then((response) => {
             if (response.data.status) {
-                navigate("/")
+                navigate("/home")
                 toast.success("Log in successfully")
             } else {
                 toast.error("Login failed")
@@ -64,7 +64,7 @@ const SignIn = () => {
                                     Password
                                 </label>
                                 <div className="text-sm">
-                                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                                    <a href="/ForgotPassword" className="font-semibold text-indigo-600 hover:text-indigo-500">
                                         Forgot password?
                                     </a>
                                 </div>

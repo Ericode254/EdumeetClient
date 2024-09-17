@@ -13,11 +13,11 @@ const App = () => {
     <>
       <Toaster position="top-right" />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="/" element={<SignIn />}></Route>
         <Route path="/Meets" element={<Meets />}></Route>
         <Route path="/Profile" element={<Profile />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/signin" element={<SignIn />}></Route>
+        <Route path="/home" element={<Home />}></Route>
         <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
         <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
         <Route path="*"></Route>
