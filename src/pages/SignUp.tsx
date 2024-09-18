@@ -17,7 +17,7 @@ const SignUp = () => {
                 toast.success("User created successfully")
                 navigate("/")
             } else {
-                toast.error("Registration failed")
+                toast.error(response.data.message)
             }
         }).catch(err => {
             console.log(err);
@@ -105,7 +105,7 @@ const SignUp = () => {
 
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Already have an account?{' '}
-                        <button className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500" onClick={() => navigate("/signin")}>
+                        <button className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500" onClick={() => navigate("/")}>
                             Signin
                         </button>
                     </p>

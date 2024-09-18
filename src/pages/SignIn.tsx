@@ -18,7 +18,7 @@ const SignIn = () => {
                 navigate("/home")
                 toast.success("Log in successfully")
             } else {
-                toast.error("Login failed")
+                toast.error(response.data.message)
             }
         }).catch((err) => {
             console.log(err);
