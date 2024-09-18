@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Axios from "axios"
-import { SyntheticEvent, useState } from "react"
+import { SyntheticEvent, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
 
@@ -24,11 +24,23 @@ const ForgotPassword = () => {
             console.log(err);
         })
     }
+
+    useEffect(() => {
+        Axios.get("http://localhost:3000/auth/verify").then((response) => {
+            if (response.data.status) {
+                navigate("/home")
+            } else {
+                navigate("/")
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    })
     return (
         <div className="h-screen flex flex-col items-center justify-center">
             <form onSubmit={handleSubmit}>
                 <h1 className="text-white p-3 text-2xl">Forgot Password</h1>
-                <Input type="email" placeholder="Email" className="w-auto text-white placeholder:text-white" onChange={(e) => setEmail(e.target.value)}/>
+                <Input type="email" placeholder="Email" className="w-auto text-white placeholder:text-white" onChange={(e) => setEmail(e.target.value)} />
                 <Button className="bg-indigo-500 mt-3 w-auto" type="submit">Send</Button>
             </form>
         </div>
