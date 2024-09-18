@@ -7,6 +7,8 @@ import Profile from "./pages/Profile"
 import ResetPassword from "./pages/ResetPassword"
 import ForgotPassword from "./pages/ForgotPassword"
 import { Toaster } from "react-hot-toast"
+import EventForm from "./pages/EventForm"
+import "./App.css"
 
 const App = () => {
   return (
@@ -19,6 +21,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/home" element={<Home />}></Route>
         <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
+        <Route path="/eventform" element={<EventForm />}></Route>
         <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
         <Route path="*"></Route>
       </Routes>

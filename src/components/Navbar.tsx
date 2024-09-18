@@ -18,7 +18,7 @@ const Navbar = () => {
         })
     }
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-transparent">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -46,7 +46,7 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="navbar-center">
-                <a href="/" className="btn btn-ghost text-xl text-yellow-400">Edumeet</a>
+                <a href="/home" className="btn btn-ghost text-xl text-yellow-400">Edumeet</a>
             </div>
             <div className="navbar-end">
                 <Button className="mr-5 bg-indigo-500" onClick={handleLogout}> LogOut </Button>

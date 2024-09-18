@@ -29,7 +29,7 @@ const ForgotPassword = () => {
             <form onSubmit={handleSubmit}>
                 <h1 className="text-white p-3 text-2xl">Forgot Password</h1>
                 <Input type="email" placeholder="Email" className="w-auto text-white placeholder:text-white" onChange={(e) => setEmail(e.target.value)}/>
-                <Button className="bg-indigo-500 mt-3" type="submit">Send</Button>
+                <Button className="bg-indigo-500 mt-3 w-auto" type="submit">Send</Button>
             </form>
         </div>
     )
