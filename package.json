@@ -22,6 +22,8 @@
     "clsx": "^2.1.1",
     "edumeet": "file:",
     "embla-carousel-react": "^8.3.0",
+    "flowbite": "^2.5.1",
+    "flowbite-react": "^0.10.1",
     "gasp": "^0.0.2",
     "gsap": "^3.12.5",
     "lucide-react": "^0.437.0",

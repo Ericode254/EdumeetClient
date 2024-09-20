@@ -1,4 +1,3 @@
-import ProfileForm from "@/components/ProfileForm"
 import Axios from "axios"
 import { useEffect } from "react"
 import toast from "react-hot-toast"
@@ -21,7 +20,7 @@ const Profile = () => {
   })
   return (
     <div className="h-screen">
-        <ProfileForm />
+
     </div>
   )
 }
