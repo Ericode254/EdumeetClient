@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Axios from "axios"
-import { SyntheticEvent, useEffect, useState } from "react"
+import { SyntheticEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
 
@@ -25,17 +25,6 @@ const ForgotPassword = () => {
         })
     }
 
-    useEffect(() => {
-        Axios.get("http://localhost:3000/auth/verify").then((response) => {
-            if (response.data.status) {
-                navigate("/home")
-            } else {
-                navigate("/")
-            }
-        }).catch((error) => {
-            console.log(error)
-        })
-    })
     return (
         <div className="h-screen flex flex-col items-center justify-center">
             <form onSubmit={handleSubmit}>
