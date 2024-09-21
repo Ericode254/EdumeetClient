@@ -15,21 +15,41 @@ const EventForm = () => {
 
     const navigate = useNavigate()
 
+    console.log(image);
+
+
     const handleSubmit = (e: SyntheticEvent) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        Axios.post("http://localhost:3000/events/event", { title, description, image, startTime, endTime, speaker }).then((response) => {
-            if (response.data.status) {
-                toast.success(response.data.message)
-                navigate("/Meets")
-            } else {
-                toast.error("Error while publishing the event")
+        // Create FormData object
+        const formData = new FormData();
+
+        // Append all fields to formData
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('image', image); // Assuming `image` is the file object from an input[type="file"]
+        formData.append('startTime', startTime);
+        formData.append('endTime', endTime);
+        formData.append('speaker', speaker);
+
+        // Send POST request with formData
+        Axios.post("http://localhost:3000/events/event", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data', // Important for file uploads
             }
-        }).catch((error) => {
-            console.log(error);
-
         })
-    }
+        .then((response) => {
+            if (response.data.status) {
+                toast.success(response.data.message);
+                navigate("/Meets");
+            } else {
+                toast.error("Error while publishing the event");
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
 
     return (
         <>
@@ -42,7 +62,7 @@ const EventForm = () => {
                     <div className="mb-3">
 
                         <label className="block mb-2 text-sm font-medium text-white dark:text-white" htmlFor="file_input">Upload Image</label>
-                        <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" onChange={(e) => setImage(e.target.value)} />
+                        <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" onChange={(e) => setImage(e.target.files[0])} />
 
                     </div>
 
@@ -87,7 +107,7 @@ const EventForm = () => {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="speaker" className="block mb-2 text-sm font-medium text-white">Speaker</label>
-                            <input type="text" id="speaker" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Title" required onChange={(e) => setSpeaker(e.target.value)} />
+                            <input type="text" id="speaker" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Speaker" required onChange={(e) => setSpeaker(e.target.value)} />
                         </div>
                         <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                 </form>
