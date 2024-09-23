@@ -2,6 +2,7 @@ import { SyntheticEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Axios from "axios"
 import toast from "react-hot-toast"
+import { jwtDecode } from "jwt-decode"
 
 const SignIn = () => {
     const [email, setEmail] = useState('')
@@ -17,6 +18,10 @@ const SignIn = () => {
             if (response.data.status) {
                 navigate("/home")
                 toast.success("Log in successfully")
+                const token = response.data.token;
+                const decodedToken = jwtDecode(token)
+                const userId = decodedToken.id
+                localStorage.setItem("currentUserId", userId)
             } else {
                 toast.error(response.data.message)
             }

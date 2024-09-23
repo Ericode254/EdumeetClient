@@ -78,6 +78,7 @@ const Meets = () => {
             events.map((event) => (
               <Card
                 key={event._id}
+                _id={event._id}
                 title={event.title}
                 description={event.description}
                 image={event.image}

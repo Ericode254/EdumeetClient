@@ -10,6 +10,7 @@ const Navbar = () => {
     const handleLogout = () => {
         Axios.get("http://localhost:3000/auth/logout").then((response) => {
             if (response.data.status) {
+                localStorage.clear()
                 toast.success("Logged Out Successfully")
                 navigate("/")
             }
