@@ -19,7 +19,7 @@ const ResetPassword = () => {
                 toast.success("Password Reset Successful")
                 navigate("/")
             }
-            // toast.error(response.data.message)
+            toast.error(response.data.message)
         }).catch((err) => {
             console.log(err);
         })
