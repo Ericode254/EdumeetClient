@@ -17,7 +17,7 @@ const ResetPassword = () => {
         Axios.post("http://localhost:3000/auth/resetpassword/"+token, { password, }).then((response) => {
             if (response.data.status) {
                 toast.success("Password Reset Successful")
-                navigate("/resetpassword"+token)
+                navigate("/")
             }
             // toast.error(response.data.message)
         }).catch((err) => {
