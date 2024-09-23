@@ -27,7 +27,7 @@ const SignUp = () => {
 
     return (
         <>
-            <div className="h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+            <div className="h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gradient-to-r from-gray-800 via-gray-900 to-black">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                         alt="EduMeet logo"
@@ -35,7 +35,7 @@ const SignUp = () => {
                         className="mx-auto h-20 w-auto"
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-                        Sign Up to EduMeet
+                        Sign Up to EUCOSSAMeets
                     </h2>
                 </div>
 
@@ -51,7 +51,7 @@ const SignUp = () => {
                                     name="user"
                                     type="text"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-white focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md bg-gray-800 border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-500 sm:text-sm sm:leading-6"
                                     onChange={(e) => setUserName(e.target.value)}
                                 />
                             </div>
@@ -68,18 +68,16 @@ const SignUp = () => {
                                     type="email"
                                     required
                                     autoComplete="email"
-                                    className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-white focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md bg-gray-800 border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-500 sm:text-sm sm:leading-6"
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <div className="flex items-center justify-between">
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-white">
-                                    Password
-                                </label>
-                            </div>
+                            <label htmlFor="password" className="block text-sm font-medium leading-6 text-white">
+                                Password
+                            </label>
                             <div className="mt-2">
                                 <input
                                     id="password"
@@ -87,7 +85,7 @@ const SignUp = () => {
                                     type="password"
                                     required
                                     autoComplete="current-password"
-                                    className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md bg-gray-800 border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-500 sm:text-sm sm:leading-6"
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
@@ -96,21 +94,22 @@ const SignUp = () => {
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                             >
                                 Sign up
                             </button>
                         </div>
                     </form>
 
-                    <p className="mt-10 text-center text-sm text-gray-500">
+                    <p className="mt-10 text-center text-sm text-gray-400">
                         Already have an account?{' '}
-                        <button className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500" onClick={() => navigate("/")}>
-                            Signin
+                        <button className="font-semibold leading-6 text-teal-600 hover:text-teal-500" onClick={() => navigate("/")}>
+                            Sign in
                         </button>
                     </p>
                 </div>
             </div>
+
         </>
     )
 }

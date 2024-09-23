@@ -26,13 +26,35 @@ const ForgotPassword = () => {
     }
 
     return (
-        <div className="h-screen flex flex-col items-center justify-center">
-            <form onSubmit={handleSubmit}>
-                <h1 className="text-white p-3 text-2xl">Forgot Password</h1>
-                <Input type="email" placeholder="Email" className="w-auto text-white placeholder:text-white" onChange={(e) => setEmail(e.target.value)} />
-                <Button className="bg-indigo-500 mt-3 w-auto" type="submit">Send</Button>
-            </form>
+        <div className="h-screen bg-gradient-to-r from-gray-800 via-gray-900 to-black flex flex-col items-center justify-center p-6">
+            <div className="bg-gray-900 shadow-xl rounded-lg p-8 max-w-md w-full">
+                <h1 className="text-white text-3xl font-bold text-center mb-6">Forgot Password</h1>
+
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <label className="block text-gray-300 text-sm font-semibold mb-2" htmlFor="email">
+                            Email Address
+                        </label>
+                        <Input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 ease-in-out"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+
+                    <Button
+                        className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition duration-300 ease-in-out shadow-lg transform hover:scale-105"
+                        type="submit"
+                    >
+                        Send Reset Link
+                    </Button>
+                </form>
+            </div>
         </div>
+
+
     )
 }
 

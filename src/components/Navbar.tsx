@@ -47,7 +47,7 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="navbar-center">
-                <a href="/home" className="btn btn-ghost text-xl text-yellow-400">Edumeet</a>
+                <a href="/home" className="btn btn-ghost text-xl text-yellow-400">EUCOSSAMeets</a>
             </div>
             <div className="navbar-end">
                 <Button className="mr-5 bg-indigo-500" onClick={handleLogout}> LogOut </Button>
