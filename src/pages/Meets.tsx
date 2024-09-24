@@ -14,6 +14,7 @@ interface Event {
   startTime: string;
   endTime: string;
   speaker: string;
+  creatorId: string;
 }
 
 const Meets = () => {
@@ -59,6 +60,10 @@ const Meets = () => {
     fetchData();
   }, []);
 
+  const handleDelete = (id: string) => {
+    setEvents(events.filter(event => event._id !== id));
+  };
+
   return (
     <>
       <Navbar />
@@ -85,6 +90,8 @@ const Meets = () => {
                 startTime={event.startTime}
                 endTime={event.endTime}
                 speaker={event.speaker}
+                creatorId={event.creatorId}
+                onDelete={handleDelete}
               />
             ))
           ) : (

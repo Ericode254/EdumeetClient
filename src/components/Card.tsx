@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
+import toast from "react-hot-toast";
 
 interface Props {
     _id: string;
@@ -10,13 +12,15 @@ interface Props {
     startTime: string;
     endTime: string;
     speaker: string;
+    creatorId: string; // Assuming you have a creatorId prop to identify the user who created the card
+    onDelete: (id: string) => void;
 }
 
-const Card = ({ _id, title, description, image, startTime, endTime, speaker }: Props) => {
+const Card = ({ _id, title, description, image, startTime, endTime, speaker, creatorId, onDelete }: Props) => {
     const [likes, setLikes] = useState<number>(0);
     const [dislikes, setDislikes] = useState<number>(0);
     const [currentUserId, setCurrentUserId] = useState<string | null>();
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const userId = localStorage.getItem("currentUserId");
@@ -31,7 +35,7 @@ const Card = ({ _id, title, description, image, startTime, endTime, speaker }: P
     }, [_id]);
 
     const handleLike = () => {
-        Axios.post(`http://localhost:3000/events/card/${_id}/like`, { userId: currentUserId })
+        Axios.post(`http://localhost:3000/events/card/${_id}/like`)
             .then((response) => {
                 setLikes(response.data.likes);
                 setDislikes(response.data.dislikes);
@@ -40,12 +44,32 @@ const Card = ({ _id, title, description, image, startTime, endTime, speaker }: P
     };
 
     const handleDislike = () => {
-        Axios.post(`http://localhost:3000/events/card/${_id}/dislike`, { userId: currentUserId })
+        Axios.post(`http://localhost:3000/events/card/${_id}/dislike`)
             .then((response) => {
                 setLikes(response.data.likes);
                 setDislikes(response.data.dislikes);
             })
             .catch((error) => console.error(error));
+    };
+
+    // New function to handle deleting the card
+    const handleDelete = () => {
+        if (window.confirm("Are you sure you want to delete this event?")) {
+            Axios.delete(`http://localhost:3000/events/event/${_id}`)
+                .then(() => {
+                    toast.success("Event deleted successfully");
+                    onDelete(_id); // Call the parent handler to remove the card from UI
+                })
+                .catch((error) => {
+                    console.error("Error deleting event:", error);
+                    toast.error("Failed to delete the event");
+                });
+        }
+    };
+
+    // New function to handle editing the card
+    const handleEdit = () => {
+        navigate(`/edit/${_id}`); // Redirect to edit page
     };
 
 
@@ -73,6 +97,26 @@ const Card = ({ _id, title, description, image, startTime, endTime, speaker }: P
                     <Button className="text-white bg-indigo-500 hover:bg-indigo-600 py-2 px-4 rounded-full transition-transform transform hover:scale-105">
                         {speaker}
                     </Button>
+
+                    {/* Edit Button - Only show if the current user is the creator */}
+                    {currentUserId === creatorId && (
+                        <Button
+                            onClick={handleEdit}
+                            className="text-white bg-blue-500 hover:bg-blue-600 py-2 px-4 rounded-full transition-transform transform hover:scale-105"
+                        >
+                            Edit
+                        </Button>
+                    )}
+
+                    {/* Delete Button */}
+                    {currentUserId === creatorId && (
+                        <Button
+                            onClick={handleDelete}
+                            className="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded-full transition-transform transform hover:scale-105"
+                        >
+                            Delete
+                        </Button>
+                    )}
 
                     <div className="flex items-center space-x-4">
                         {/* Like Button */}
@@ -106,7 +150,6 @@ const Card = ({ _id, title, description, image, startTime, endTime, speaker }: P
                 </div>
             </div>
         </div>
-
     );
 };
 
