@@ -9,6 +9,8 @@ import ForgotPassword from "./pages/ForgotPassword"
 import { Toaster } from "react-hot-toast"
 import EventForm from "./pages/EventForm"
 import "./App.css"
+import Dashboard from "./pages/Dashboard"
+import UserManagement from "./pages/UserManagement"
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
         <Route path="/edit/:id" element={<EventForm />} />
         <Route path="/eventform" element={<EventForm />}></Route>
         <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/user-management" element={<UserManagement />} />
         <Route path="*"></Route>
       </Routes>
     </>
