@@ -14,6 +14,8 @@ const ForgotPassword = () => {
         e.preventDefault()
 
         Axios.post("http://localhost:3000/auth/forgot-password", { email, }).then((response) => {
+            console.log(response.data);
+
             if (response.data.status) {
                 toast.success("Check your Email to reset your password")
                 navigate("/")
