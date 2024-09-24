@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
@@ -12,7 +12,7 @@ interface Props {
     startTime: string;
     endTime: string;
     speaker: string;
-    creatorId: string; // Assuming you have a creatorId prop to identify the user who created the card
+    creatorId: string;
     onDelete: (id: string) => void;
 }
 
@@ -32,46 +32,90 @@ const Card = ({ _id, title, description, image, startTime, endTime, speaker, cre
                 setDislikes(response.data.dislikes);
             })
             .catch((error) => console.error(error));
-    }, [_id]);
 
-    const handleLike = () => {
+        const interval = setInterval(() => {
+            const now = new Date()
+            const timeString = endTime
+            const [hours, minutes] = timeString.split(":").map(Number);
+
+            // Get today's date
+            const today = new Date();
+            const dateObject = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes);
+
+            if (now > dateObject) {
+                confirmDelete();
+                clearInterval(interval);
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [_id, endTime]);
+
+    const handleLike = useCallback(() => {
         Axios.post(`http://localhost:3000/events/card/${_id}/like`)
             .then((response) => {
                 setLikes(response.data.likes);
                 setDislikes(response.data.dislikes);
             })
             .catch((error) => console.error(error));
-    };
+    }, [_id]);
 
-    const handleDislike = () => {
+    const handleDislike = useCallback(() => {
         Axios.post(`http://localhost:3000/events/card/${_id}/dislike`)
             .then((response) => {
                 setLikes(response.data.likes);
                 setDislikes(response.data.dislikes);
             })
             .catch((error) => console.error(error));
+    }, [_id]);
+
+    const handleDelete = useCallback(() => {
+        const confirmToast = toast.custom((t) => (
+            <div className={`bg-gray-800 text-white p-4 rounded shadow-md flex flex-col items-center
+                ${t.visible ? 'animate-enter' : 'animate-leave'}
+                fixed left-1/2 transform -translate-x-1/2 top-1/4 z-50 w-11/12 sm:w-1/3`}>
+                <h2 className="font-bold text-lg text-center mb-2">Confirm Deletion</h2>
+                <p className="text-center mb-4">Are you sure you want to delete this event?</p>
+                <div className="flex justify-between w-full space-x-2">
+                    <Button
+                        onClick={() => {
+                            confirmDelete();
+                            toast.dismiss(t.id);
+                        }}
+                        className="bg-red-600 hover:bg-red-700 text-white py-2 flex-1 rounded"
+                    >
+                        Yes
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            toast.dismiss(t.id);
+                        }}
+                        className="bg-gray-500 hover:bg-gray-600 text-white py-2 flex-1 rounded"
+                    >
+                        No
+                    </Button>
+                </div>
+            </div>
+        ));
+
+        toast(confirmToast);
+    }, [_id]);
+
+    const confirmDelete = () => {
+        Axios.delete(`http://localhost:3000/events/event/${_id}`)
+            .then(() => {
+                toast.success("Event deleted successfully");
+                onDelete(_id);
+            })
+            .catch((error) => {
+                console.error("Error deleting event:", error);
+                toast.error("Failed to delete the event");
+            });
     };
 
-    // New function to handle deleting the card
-    const handleDelete = () => {
-        if (window.confirm("Are you sure you want to delete this event?")) {
-            Axios.delete(`http://localhost:3000/events/event/${_id}`)
-                .then(() => {
-                    toast.success("Event deleted successfully");
-                    onDelete(_id); // Call the parent handler to remove the card from UI
-                })
-                .catch((error) => {
-                    console.error("Error deleting event:", error);
-                    toast.error("Failed to delete the event");
-                });
-        }
-    };
-
-    // New function to handle editing the card
-    const handleEdit = () => {
-        navigate(`/edit/${_id}`); // Redirect to edit page
-    };
-
+    const handleEdit = useCallback(() => {
+        navigate(`/edit/${_id}`);
+    }, [_id, navigate]);
 
     return (
         <div className="flex-none h-auto card bg-gray-900 w-96 shadow-2xl rounded-lg overflow-hidden">
@@ -87,39 +131,25 @@ const Card = ({ _id, title, description, image, startTime, endTime, speaker, cre
                     <h2 className="card-title text-yellow-400 text-2xl font-bold">{title}</h2>
                 </div>
                 <p className="text-gray-300 text-sm mb-4">{description}</p>
-
                 <div className="flex justify-between text-gray-400 text-sm mb-4">
                     <p>{`Starts: ${startTime}`}</p>
                     <p>{`Ends: ${endTime}`}</p>
                 </div>
-
                 <div className="card-actions flex justify-between items-center">
                     <Button className="text-white bg-indigo-500 hover:bg-indigo-600 py-2 px-4 rounded-full transition-transform transform hover:scale-105">
                         {speaker}
                     </Button>
-
-                    {/* Edit Button - Only show if the current user is the creator */}
                     {currentUserId === creatorId && (
-                        <Button
-                            onClick={handleEdit}
-                            className="text-white bg-blue-500 hover:bg-blue-600 py-2 px-4 rounded-full transition-transform transform hover:scale-105"
-                        >
+                        <Button onClick={handleEdit} className="text-white bg-blue-500 hover:bg-blue-600 py-2 px-4 rounded-full transition-transform transform hover:scale-105">
                             Edit
                         </Button>
                     )}
-
-                    {/* Delete Button */}
                     {currentUserId === creatorId && (
-                        <Button
-                            onClick={handleDelete}
-                            className="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded-full transition-transform transform hover:scale-105"
-                        >
+                        <Button onClick={handleDelete} className="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded-full transition-transform transform hover:scale-105">
                             Delete
                         </Button>
                     )}
-
                     <div className="flex items-center space-x-4">
-                        {/* Like Button */}
                         <div className="flex items-center">
                             <svg
                                 onClick={handleLike}
@@ -132,8 +162,6 @@ const Card = ({ _id, title, description, image, startTime, endTime, speaker, cre
                             </svg>
                             <span className="text-white ml-1">{likes}</span>
                         </div>
-
-                        {/* Dislike Button */}
                         <div className="flex items-center">
                             <svg
                                 onClick={handleDislike}

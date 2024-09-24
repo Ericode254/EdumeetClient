@@ -120,7 +120,7 @@ const EventForm = () => {
                                     id="start-time"
                                     className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2"
                                     min="09:00"
-                                    max="18:00"
+                                    max="19:00"
                                     value={startTime}
                                     required
                                     onChange={(e) => setStartTime(e.target.value)}
@@ -133,7 +133,7 @@ const EventForm = () => {
                                     id="end-time"
                                     className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2"
                                     min="09:00"
-                                    max="18:00"
+                                    max="19:00"
                                     value={endTime}
                                     required
                                     onChange={(e) => setEndTime(e.target.value)}
