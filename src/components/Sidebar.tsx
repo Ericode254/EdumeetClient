@@ -34,6 +34,12 @@ const Sidebar = () => {
                 >
                     User Management
                 </Link>
+                <Link
+                    to="/event-management"
+                    className="block py-3 px-4 rounded-lg transition duration-200 hover:bg-gray-700"
+                >
+                    Event Management
+                </Link>
             </nav>
             <div className="p-4 border-t border-gray-700">
                 <Link

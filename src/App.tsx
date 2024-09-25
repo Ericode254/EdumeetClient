@@ -11,6 +11,7 @@ import EventForm from "./pages/EventForm"
 import "./App.css"
 import Dashboard from "./pages/Dashboard"
 import UserManagement from "./pages/UserManagement"
+import EventManagement from "./pages/EventManagement"
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/user-management" element={<UserManagement />} />
+        <Route path="/event-management" element={<EventManagement />} />
         <Route path="*"></Route>
       </Routes>
     </>
