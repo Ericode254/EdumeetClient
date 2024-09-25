@@ -11,12 +11,13 @@ interface Props {
     image: string;
     startTime: string;
     endTime: string;
+    eventDate: string;
     speaker: string;
     creatorId: string;
     onDelete: (id: string) => void;
 }
 
-const Card = ({ _id, title, description, image, startTime, endTime, speaker, creatorId, onDelete }: Props) => {
+const Card = ({ _id, title, description, image, startTime, endTime, eventDate, speaker, creatorId, onDelete }: Props) => {
     const [likes, setLikes] = useState<number>(0);
     const [dislikes, setDislikes] = useState<number>(0);
     const [currentUserId, setCurrentUserId] = useState<string | null>();
@@ -34,13 +35,11 @@ const Card = ({ _id, title, description, image, startTime, endTime, speaker, cre
             .catch((error) => console.error(error));
 
         const interval = setInterval(() => {
-            const now = new Date()
-            const timeString = endTime
-            const [hours, minutes] = timeString.split(":").map(Number);
-
-            // Get today's date
-            const today = new Date();
-            const dateObject = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes);
+            const now = new Date();
+            const timeString = endTime;
+            const dateString = eventDate;
+            const combinedString = `${dateString}T${timeString}:00`;
+            const dateObject = new Date(combinedString)
 
             if (now > dateObject) {
                 confirmDelete();
@@ -131,6 +130,13 @@ const Card = ({ _id, title, description, image, startTime, endTime, speaker, cre
                     <h2 className="card-title text-yellow-400 text-2xl font-bold">{title}</h2>
                 </div>
                 <p className="text-gray-300 text-sm mb-4">{description}</p>
+
+                {/* Event Day Section */}
+                <div className="mb-4 text-center">
+                    <p className="text-gray-200 font-semibold">Event Day:</p>
+                    <p className="text-yellow-400 text-xl font-bold">{new Date(eventDate).toLocaleDateString()}</p>
+                </div>
+
                 <div className="flex justify-between text-gray-400 text-sm mb-4">
                     <p>{`Starts: ${startTime}`}</p>
                     <p>{`Ends: ${endTime}`}</p>

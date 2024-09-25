@@ -11,6 +11,7 @@ const EventForm = () => {
     const [startTime, setStartTime] = useState('09:00');
     const [endTime, setEndTime] = useState('09:00');
     const [speaker, setSpeaker] = useState('');
+    const [eventDay, setEventDay] = useState<string | null>(null); // State to store the selected date
     const [isVisible, setIsVisible] = useState(false);
     const navigate = useNavigate();
 
@@ -19,13 +20,14 @@ const EventForm = () => {
         if (id) {
             Axios.get(`http://localhost:3000/events/card/${id}`, { withCredentials: true })
                 .then((response) => {
-                    const { title, description, image, startTime, endTime, speaker } = response.data;
+                    const { title, description, image, startTime, endTime, speaker, eventDay } = response.data;
                     setTitle(title);
                     setDescription(description);
-                    setImage(image); // You may want to handle this differently
+                    setImage(image); // Handle image preview logic separately if necessary
                     setStartTime(startTime);
                     setEndTime(endTime);
-                    setSpeaker(speaker)
+                    setSpeaker(speaker);
+                    setEventDay(eventDay); // Pre-fill the date picker when editing an event
                 })
                 .catch((error) => console.error("Error fetching event data:", error));
         }
@@ -33,8 +35,8 @@ const EventForm = () => {
 
     const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
-        const formData = new FormData();
 
+        const formData = new FormData();
         formData.append('title', title);
         formData.append('description', description);
 
@@ -45,6 +47,7 @@ const EventForm = () => {
         formData.append('startTime', startTime);
         formData.append('endTime', endTime);
         formData.append('speaker', speaker);
+        if (eventDay) formData.append('eventDay', eventDay); // Append the selected date to the form data
 
         const request = id
             ? Axios.put(`http://localhost:3000/events/event/${id}`, formData, {
@@ -79,7 +82,7 @@ const EventForm = () => {
         <div className="h-screen flex items-center justify-center bg-gray-900">
             <form className="max-w-sm w-full p-8 bg-gray-800 shadow-lg rounded-lg" onSubmit={handleSubmit}>
                 {/* Form fields */}
-                <div className="mb-6">
+                <div className="mb-3">
                     <label htmlFor="title" className="block mb-2 text-sm font-semibold text-white">Title</label>
                     <input
                         type="text"
@@ -92,17 +95,20 @@ const EventForm = () => {
                     />
                 </div>
 
-                <div className="mb-6">
-                    <label className="block mb-2 text-sm font-semibold text-white" htmlFor="file_input">Upload Image</label>
+                {/* Date picker section */}
+                <div className="mb-3">
+                    <label htmlFor="eventDay" className="block mb-2 text-sm font-semibold text-white">Event Day</label>
                     <input
-                        className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg cursor-pointer p-2"
-                        id="file_input"
-                        type="file"
-                        onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)}
+                        type="date"
+                        id="eventDay"
+                        className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2"
+                        value={eventDay || ''}
+                        onChange={(e) => setEventDay(e.target.value)}
                     />
                 </div>
 
-                <div className="w-full mb-6">
+                {/* Time range selection */}
+                <div className="w-full mb-3">
                     <button
                         id="selectTimeToggle"
                         type="button"
@@ -143,7 +149,7 @@ const EventForm = () => {
                     )}
                 </div>
 
-                <div className="mb-6">
+                <div className="mb-3">
                     <label htmlFor="message" className="block mb-2 text-sm font-semibold text-white">Event Description</label>
                     <textarea
                         id="message"
@@ -155,7 +161,7 @@ const EventForm = () => {
                     />
                 </div>
 
-                <div className="mb-6">
+                <div className="mb-3">
                     <label htmlFor="speaker" className="block mb-2 text-sm font-semibold text-white">Speaker</label>
                     <input
                         type="text"
@@ -165,6 +171,16 @@ const EventForm = () => {
                         required
                         value={speaker}
                         onChange={(e) => setSpeaker(e.target.value)}
+                    />
+                </div>
+
+                <div className="mb-3">
+                    <label className="block mb-2 text-sm font-semibold text-white" htmlFor="file_input">Upload Image</label>
+                    <input
+                        className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg cursor-pointer p-2"
+                        id="file_input"
+                        type="file"
+                        onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)}
                     />
                 </div>
 

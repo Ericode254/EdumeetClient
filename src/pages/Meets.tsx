@@ -13,6 +13,7 @@ interface Event {
   image: string;
   startTime: string;
   endTime: string;
+  eventDay: string;
   speaker: string;
   creatorId: string;
 }
@@ -89,6 +90,7 @@ const Meets = () => {
                 image={event.image}
                 startTime={event.startTime}
                 endTime={event.endTime}
+                eventDate={event.eventDay}
                 speaker={event.speaker}
                 creatorId={event.creatorId}
                 onDelete={handleDelete}
