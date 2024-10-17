@@ -84,6 +84,7 @@ const SignUp = () => {
                                     name="password"
                                     type="password"
                                     required
+                                    minLength={6}
                                     autoComplete="current-password"
                                     className="block w-full rounded-md bg-gray-800 border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-500 sm:text-sm sm:leading-6"
                                     onChange={(e) => setPassword(e.target.value)}

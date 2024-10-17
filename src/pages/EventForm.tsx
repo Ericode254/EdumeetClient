@@ -104,6 +104,7 @@ const EventForm = () => {
                         className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2"
                         value={eventDay || ''}
                         onChange={(e) => setEventDay(e.target.value)}
+                        required
                     />
                 </div>
 
